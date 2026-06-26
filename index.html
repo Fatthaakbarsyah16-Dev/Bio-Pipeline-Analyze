@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioinformatics Central Dogma Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="app-container">
+        
+        <aside class="sidebar">
+            <div class="brand">
+                <h2>🧬 CentralDogma <span class="badge">Lite</span></h2>
+            </div>
+            
+            <div class="control-group">
+                <h3>📂 Input File</h3>
+                <label for="fileInput" class="drop-zone">
+                    <span>Pilih FASTA / FASTQ</span>
+                    <input type="file" id="fileInput" accept=".fasta,.fa,.fastq,.fq">
+                </label>
+            </div>
+
+            <div class="control-group">
+                <h3>🎛️ Controller</h3>
+                <div class="filter-item">
+                    <label>Min Length: <span id="lenVal">0</span> bp</label>
+                    <input type="range" id="lenFilter" min="0" max="5000" value="0">
+                </div>
+                <div class="filter-item">
+                    <label>Sliding Window: <span id="winVal">100</span> bp</label>
+                    <input type="range" id="winSize" min="10" max="500" value="100">
+                </div>
+                <div class="filter-item">
+                    <label>Frame View:</label>
+                    <select id="frameSelector">
+                        <option value="0">Forward Frame 1</option>
+                        <option value="1">Forward Frame 2</option>
+                        <option value="2">Forward Frame 3</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control-group actions">
+                <button id="processBtn" class="btn btn-primary" disabled>⚡ Jalankan Analisis</button>
+                <button id="downloadCsvBtn" class="btn btn-success" disabled>📥 Download CSV</button>
+                <button id="downloadFaaBtn" class="btn btn-success" disabled>🧬 Download FASTA (.faa)</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <section class="stats-grid">
+                <div class="card stat-card">
+                    <h4>Stabilitas Termal mRNA (Rasio GC)</h4>
+                    <p id="statThermal">0.0%</p>
+                </div>
+                <div class="card stat-card">
+                    <h4>Kodon Start/Stop Found</h4>
+                    <p id="statCodons">0 / 0</p>
+                </div>
+                <div class="card stat-card">
+                    <h4>N50 Metric</h4>
+                    <p id="statN50">0 bp</p>
+                </div>
+            </section>
+
+            <section class="card">
+                <h3>🔍 Interactive Sequence Viewer (Timin [T] ➔ Urasil [U])</h3>
+                <div class="seq-viewer-box">
+                    <div class="viewer-line"><strong>DNA:</strong> <span id="dnaView" class="seq-string">...</span></div>
+                    <div class="viewer-line"><strong>mRNA:</strong> <span id="mrnaView" class="seq-string-rna">...</span></div>
+                    <div class="viewer-line"><strong>Peptide:</strong> <span id="peptideView" class="seq-string-protein">...</span></div>
+                </div>
+            </section>
+
+            <div class="chart-grid">
+                <div class="card">
+                    <h3>📈 Sliding Window GC/AT Skew</h3>
+                    <div class="chart-container"><canvas id="skewChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <h3>📊 Komposisi Purin vs Pirimidin</h3>
+                    <div class="chart-container"><canvas id="purineChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="card">
+                    <h3>⛰️ Profil Hidrofobisitas (Kyte-Doolittle)</h3>
+                    <div class="chart-container"><canvas id="hydroChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <h3>🥧 Sifat Kimiawi Asam Amino & Bias Kodon</h3>
+                    <div class="chart-container"><canvas id="aminoChart"></canvas></div>
+                </div>
+            </div>
+
+            <section class="card table-wrapper">
+                <h3>📋 Hasil Analisis List Sekuens</h3>
+                <table id="mainTable">
+                    <thead>
+                        <tr>
+                            <th>ID Sekuens</th>
+                            <th>Panjang (bp)</th>
+                            <th>GC (%)</th>
+                            <th>AT (%)</th>
+                            <th>GC Skew</th>
+                            <th>Entropy</th>
+                            <th>ORF Length (aa)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="7" class="text-center">Silahkan upload file untuk melihat data.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
