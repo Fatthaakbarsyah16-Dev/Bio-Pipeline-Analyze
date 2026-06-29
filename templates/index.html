@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bioinformatics Central Dogma Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='bridge.js') }}"></script>
 </head>
 <body>
     <div class="glass-bg"></div>
     <div class="app-container">
         
-        <aside class="sidebar">
+        <aside class="sidebar"> 
             <div class="brand">
                 <h2>🧬 CentralDogma <span class="badge">Lite</span></h2>
             </div>
